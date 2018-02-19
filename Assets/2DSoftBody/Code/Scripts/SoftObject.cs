@@ -159,6 +159,8 @@ public class SoftObject : MonoBehaviour
 		gJoint.layer = JointsLayer;
 
 		var joint = gJoint.AddComponent<SpringJoint2D>();
+        Rigidbody2D rigidBody = joint.GetComponent<Rigidbody2D>();
+        rigidBody.gravityScale = 0;
 		var jointRigidBody = joint.GetComponent<Rigidbody2D>();
 #if UNITY_5_3_OR_NEWER
 		if (AutoMass)
