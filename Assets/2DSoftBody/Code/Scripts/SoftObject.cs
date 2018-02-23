@@ -25,7 +25,7 @@ public class SoftObject : MonoBehaviour
 	public List<mJoint> Joints = new List<mJoint>();
 	public Action OnInitializeCompleted;
 
-	private Transform thisTransform;
+    private Transform thisTransform;
 	private Rigidbody2D thisRigidbody;
 	private MeshFilter meshFilter;
 	private Mesh sharedMesh;
@@ -82,7 +82,7 @@ public class SoftObject : MonoBehaviour
 		var meshQuadSize = GetMeshQuadSize();
 		var jointsHorizontalCount = (int)Mathf.Round(size.x / meshQuadSize.x) + 1;
 		var jointsVerticalCount = (int)Mathf.Round(size.y / meshQuadSize.y) + 1;
-		var scaledSize = size - new Vector3(JointRadius * 2f, JointRadius * 2f);
+		var scaledSize = size - new Vector3(JointRadius * 36f, JointRadius * 36f);
 		var offset = scaledSize / 2f;
 		var jointCount = jointsHorizontalCount * jointsVerticalCount;
 		var massOfJoint = Mass / jointCount;

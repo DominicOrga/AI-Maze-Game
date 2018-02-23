@@ -8,6 +8,8 @@ public class BlipControl : MonoBehaviour {
     private float mMaxSpeed = 5f;
     private Rigidbody2D mRigidBody;
 
+    public float test;
+
 	void Start() {
         mRigidBody = this.GetComponent<Rigidbody2D>();
 	}
