@@ -5,7 +5,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class BlipControl : MonoBehaviour {
 
-    private float mMaxSpeed = 5f;
+    private float mMaxSpeed = 10f;
     private Rigidbody2D mRigidBody;
 
     public float test;

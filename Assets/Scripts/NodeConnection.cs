@@ -22,7 +22,7 @@ public class NodeConnection : MonoBehaviour {
 
     private bool[,] nodeConnections = new bool[defaultGridSize, defaultGridSize];
 
-    public bool[,] GetCells() {
+    public bool[,] GetNodeConnections() {
         bool[,] ret = new bool[gridSize, gridSize];
 
         for (int i = 0; i < gridSize; i++) {
@@ -32,13 +32,5 @@ public class NodeConnection : MonoBehaviour {
         }
 
         return ret;
-    }
-
-    void Start() {
-        for (int i = 0; i < gridSize; i++) {
-            for (int j = 0; j < gridSize; j++) {
-                nodeConnections[i, j] = cells[i].row[j];
-            }
-        }
     }
 }

@@ -10,13 +10,11 @@ public class Node {
     public bool isStartNode;
     public bool isGoalNode;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public int x {
+        get { return row * 2; }
+    }
+
+    public int y {
+        get { return col * -2; }
+    }
 }
