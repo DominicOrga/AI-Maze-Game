@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
-    public List<Vector2> mVariables;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public List<Node> mVariables;
 	
 	// Update is called once per frame
 	void Update () {
