@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Node {
 
-    public int row;
-    public int col;
+    public int row = 0;
+    public int col = 0;
     public bool isStartNode;
     public bool isGoalNode;
 

@@ -16,14 +16,14 @@ public class NodeEditor : PropertyDrawer {
 
         position.x += 35;
         Rect rowRect = new Rect(position.x, position.y, 50, position.height);
-        property.FindPropertyRelative("row").intValue = EditorGUI.IntField(rowRect, 0);
+        property.FindPropertyRelative("row").intValue = EditorGUI.IntField(rowRect, property.FindPropertyRelative("row").intValue);
 
         position.x += 55;
         EditorGUI.LabelField(position, new GUIContent("Col"));
 
         position.x += 35;
         Rect colRect = new Rect(position.x, position.y, 50, position.height);
-        property.FindPropertyRelative("col").intValue = EditorGUI.IntField(colRect, 0);
+        property.FindPropertyRelative("col").intValue = EditorGUI.IntField(colRect, property.FindPropertyRelative("col").intValue);
 
         position.x += 55;
         EditorGUI.LabelField(position, new GUIContent("S"));
