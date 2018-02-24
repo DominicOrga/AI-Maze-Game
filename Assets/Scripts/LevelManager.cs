@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour {
      **/
 
     public Camera camera;
+    public RectTransform joystick;
     public BlipControl blipPrefab;
     //public Rigidbody2D blobPrefab;
 
@@ -22,14 +23,16 @@ public class LevelManager : MonoBehaviour {
 
     BlipControl blipControl;
 
+    bool isGamePaused;
 
     // Use this for initialization
     void Start() {
+        isGamePaused = false;
         nodeGroup = gameObject.GetComponent<NodeGroup>();
         nodeConnection = gameObject.GetComponent<NodeConnection>();
 
-        int startNodeIdx = RandomizeStartNodeIdx();
-        int goalNodeIdx = RandomizeGoalNodeIdx(startNodeIdx);
+        int startNodeIdx = nodeGroup.RandomizeStartNodeIdx();
+        int goalNodeIdx = nodeGroup.RandomizeGoalNodeIdx(startNodeIdx);
 
         Vector2 startPosition = new Vector2(nodeGroup.nodes[startNodeIdx].x, nodeGroup.nodes[startNodeIdx].y);
         blipControl = Instantiate(blipPrefab, startPosition, new Quaternion(0,0,0,0)) as BlipControl;
@@ -44,33 +47,19 @@ public class LevelManager : MonoBehaviour {
         return nodeConnection.GetNodeConnections();
     }
 
-    public int RandomizeStartNodeIdx(int goalNodeIdx = -1) {
-        int[] startNodes = nodeGroup.startNodes;
+    public void SetGamePaused(bool pause) {
+        isGamePaused = pause;
 
-        for (int i = 0; i < 25; i++) {
-            int rnd = Random.Range(0, startNodes.Length);
-            int startNodeIdx = startNodes[rnd];
-
-            if (goalNodeIdx != startNodeIdx)
-                return startNodeIdx;
+        if (pause) {
+            Time.timeScale = 0;
+            joystick.GetComponentInParent<Canvas>().enabled = false;
+        } else {
+            Time.timeScale = 1;
+            joystick.GetComponentInParent<Canvas>().enabled = true;
         }
-
-        Debug.Log("Start and Goal Node are the same!");
-        return -1;
     }
 
-    public int RandomizeGoalNodeIdx(int startNodeIdx = -1) {
-        int[] goalNodes = nodeGroup.goalNodes;
-        
-        for (int i = 0; i < 25; i++) {
-            int rnd = Random.Range(0, goalNodes.Length);
-            int goalNodeIdx = goalNodes[rnd];
-
-            if (goalNodeIdx != startNodeIdx)
-                return goalNodeIdx;
-        }
-
-        Debug.Log("Start and Goal Node are the same!");
-        return -1;
+    public bool IsGamePaused() {
+        return isGamePaused;
     }
 }

@@ -11,10 +11,10 @@ public class Node {
     public bool isGoalNode;
 
 	public int x {
-        get { return row * 2; }
+        get { return col * 2; }
     }
 
     public int y {
-        get { return col * -2; }
+        get { return row * -2; }
     }
 }
