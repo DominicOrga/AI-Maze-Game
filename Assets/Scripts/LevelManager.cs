@@ -25,12 +25,14 @@ public class LevelManager : MonoBehaviour {
 
     bool isGamePaused;
 
-    // Use this for initialization
-    void Start() {
+    void Awake() {
         isGamePaused = false;
         nodeGroup = gameObject.GetComponent<NodeGroup>();
         nodeConnection = gameObject.GetComponent<NodeConnection>();
+    }
 
+    // Use this for initialization
+    void Start() {
         int startNodeIdx = nodeGroup.RandomizeStartNodeIdx();
         int goalNodeIdx = nodeGroup.RandomizeGoalNodeIdx(startNodeIdx);
 
@@ -38,6 +40,8 @@ public class LevelManager : MonoBehaviour {
         blipControl = Instantiate(blipPrefab, startPosition, new Quaternion(0,0,0,0)) as BlipControl;
         camera.transform.parent = blipControl.transform;
         camera.transform.localPosition = new Vector3(0, 0, camera.transform.localPosition.z);
+
+        Debug.Log("start level manager");
     }
 
     /**
