@@ -40,8 +40,6 @@ public class LevelManager : MonoBehaviour {
         blipControl = Instantiate(blipPrefab, startPosition, new Quaternion(0,0,0,0)) as BlipControl;
         camera.transform.parent = blipControl.transform;
         camera.transform.localPosition = new Vector3(0, 0, camera.transform.localPosition.z);
-
-        Debug.Log("start level manager");
     }
 
     public Node[] NodeGroup {
