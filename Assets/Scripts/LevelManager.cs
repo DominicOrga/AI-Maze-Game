@@ -38,7 +38,7 @@ public class LevelManager : MonoBehaviour {
         blipControl = Instantiate(blipPrefab, startPosition, new Quaternion(0,0,0,0)) as BlipControl;
         camera.transform.parent = blipControl.transform;
         camera.transform.localPosition = new Vector3(0, 0, camera.transform.localPosition.z);
-	}
+    }
 
     /**
      * Return a copy of the node connections.
@@ -61,5 +61,13 @@ public class LevelManager : MonoBehaviour {
 
     public bool IsGamePaused() {
         return isGamePaused;
+    }
+
+    /**
+     * Disable all player movements
+     **/
+    public void SetGameWon(bool isBlip) {
+        Destroy(joystick.gameObject); // Disable blip movement
+        Debug.Log("is Blip won?" + isBlip);
     }
 }
