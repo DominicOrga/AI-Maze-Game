@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour {
     //public Rigidbody2D blobPrefab;
 
     NodeGroup nodeGroup;
-    NodeConnection nodeConnection;
+    NodeConnections nodeConnection;
 
     BlipControl blipControl;
 
@@ -28,7 +28,7 @@ public class LevelManager : MonoBehaviour {
     void Awake() {
         isGamePaused = false;
         nodeGroup = gameObject.GetComponent<NodeGroup>();
-        nodeConnection = gameObject.GetComponent<NodeConnection>();
+        nodeConnection = gameObject.GetComponent<NodeConnections>();
     }
 
     // Use this for initialization
@@ -44,11 +44,19 @@ public class LevelManager : MonoBehaviour {
         Debug.Log("start level manager");
     }
 
+    public Node[] NodeGroup {
+        get {
+            return nodeGroup.nodes;
+        }
+    }
+
     /**
      * Return a copy of the node connections.
      **/
-    public bool[,] GetNodeConnection() {
-        return nodeConnection.GetNodeConnections();
+    public bool[,] NodeConnections {
+        get {
+            return nodeConnection.GetNodeConnections();
+        }
     }
 
     public void SetGamePaused(bool pause) {

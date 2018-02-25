@@ -8,7 +8,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(NodeConnection))]
+[CustomEditor(typeof(NodeConnections))]
 public class NodeConnectionEditor : Editor
 {
     private const int defaultCellSize = 17; // px

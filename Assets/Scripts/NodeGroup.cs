@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NodeGroup : MonoBehaviour {
-    public List<Node> nodes;
+    public Node[] nodes;
 
     public int[] startNodes {
         get {
             List<int> startNodes = new List<int>();
 
-            for (int i = 0; i < nodes.Count; i++) {
+            for (int i = 0, s = nodes.GetLength(0); i < s; i++) {
                 if (nodes[i].isStartNode) {
                     startNodes.Add(i);
                 }
@@ -22,7 +22,7 @@ public class NodeGroup : MonoBehaviour {
         get {
             List<int> goalNodes = new List<int>();
 
-            for (int i = 0; i < nodes.Count; i++) {
+            for (int i = 0, s = nodes.GetLength(0); i < s; i++) {
                 if (nodes[i].isGoalNode) {
                     goalNodes.Add(i);
                 }
