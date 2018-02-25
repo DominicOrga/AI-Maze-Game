@@ -30,24 +30,24 @@ public class BlobControl : MonoBehaviour {
 	void Update () {
 
         if (isMove) {
-            float deltaX = Mathf.Abs(transform.position.x - destinationNode.x);
-            float deltaY = Mathf.Abs(transform.position.y - destinationNode.y);
+            float deltaX = transform.position.x - destinationNode.x;
+            float deltaY = transform.position.y - destinationNode.y;
 
-            if (deltaX < 0.1f && deltaY < 0.1f) {
+            if (Mathf.Abs(deltaX) < 0.5f && Mathf.Abs(deltaY) < 0.5f) {
                 isMove = false;
             }
             else {
                 float step = speed * Time.deltaTime;
                 transform.position = Vector2.MoveTowards(transform.position, destinationNode.Position, step);
 
-                int rnd = Random.Range(-10, 10);
+                int rnd = Random.Range(10, 20);
                 Vector2 force = Vector2.zero;
                 if (currentNode.row == destinationNode.row) {
-                    force.y += rnd;
+                    force.y += deltaY > 0 ? -rnd : rnd;
                 } else {
-                    force.x += rnd;
+                    force.x += deltaX > 0 ? -rnd : rnd;
                 }
-                rigidBody.AddForce(force);
+                //rigidBody.AddForce(force);
             }
         }
 	}
@@ -66,9 +66,11 @@ public class BlobControl : MonoBehaviour {
         }
     }
 
-    void MoveToNode(int nodeIdx) {
+    WaitUntil MoveToNode(int nodeIdx) {
         destinationNode = levelManager.NodeGroup[nodeIdx];
         isMove = true;
+
+        return new WaitUntil(() => !isMove);
     }
 
     int[] GetAllConnectedNodes(int nodeIdx) {
@@ -109,12 +111,12 @@ public class BlobControl : MonoBehaviour {
 
         for (int i = 0, s = connectedNodes.GetLength(0); i < s; i++) {
             int destinationNodeIdx = connectedNodes[i];
-            MoveToNode(destinationNodeIdx);
-            yield return new WaitUntil(() => !isMove);
+
+            yield return MoveToNode(destinationNodeIdx);
 
             yield return StartCoroutine(Search(destinationNodeIdx));
 
-            MoveToNode(nodeIdx);
+            yield return MoveToNode(nodeIdx);
 
             ReverseForwardCheck(destinationNodeIdx);
         }

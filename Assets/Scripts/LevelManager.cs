@@ -78,6 +78,7 @@ public class LevelManager : MonoBehaviour {
      **/
     public void SetGameWon(bool isBlip) {
         Destroy(joystick.gameObject); // Disable blip movement
+        StopAllCoroutines();
         Debug.Log("is Blip won?" + isBlip);
     }
 }
