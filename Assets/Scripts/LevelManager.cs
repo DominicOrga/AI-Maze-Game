@@ -15,13 +15,14 @@ public class LevelManager : MonoBehaviour {
 
     public Camera camera;
     public RectTransform joystick;
-    public BlipControl blipPrefab;
-    //public Rigidbody2D blobPrefab;
+    public GameObject blipPrefab;
+    public GameObject blobPrefab;
 
     NodeGroup nodeGroup;
     NodeConnections nodeConnection;
 
     BlipControl blipControl;
+    BlobControl[] blobControls;
 
     bool isGamePaused;
 
@@ -29,6 +30,7 @@ public class LevelManager : MonoBehaviour {
         isGamePaused = false;
         nodeGroup = gameObject.GetComponent<NodeGroup>();
         nodeConnection = gameObject.GetComponent<NodeConnections>();
+        joystick.GetComponentInParent<Canvas>().enabled = false;
     }
 
     // Use this for initialization
@@ -37,9 +39,23 @@ public class LevelManager : MonoBehaviour {
         int goalNodeIdx = nodeGroup.RandomizeGoalNodeIdx(startNodeIdx);
 
         Vector2 startPosition = new Vector2(nodeGroup.nodes[startNodeIdx].x, nodeGroup.nodes[startNodeIdx].y);
-        blipControl = Instantiate(blipPrefab, startPosition, new Quaternion(0,0,0,0)) as BlipControl;
+        blipControl = Instantiate(blipPrefab, startPosition, new Quaternion(0,0,0,0)).GetComponent<BlipControl>();
         camera.transform.parent = blipControl.transform;
         camera.transform.localPosition = new Vector3(0, 0, camera.transform.localPosition.z);
+
+        blobControls = new BlobControl[3];
+        for (int i = 0; i < blobControls.Length; i++) {
+            blobControls[i] = Instantiate(blobPrefab, startPosition, new Quaternion(0, 0, 0, 0)).GetComponent<BlobControl>();
+        }
+
+    }
+
+    void startGame(int startNodeIdx) {
+        joystick.GetComponentInParent<Canvas>().enabled = true;
+
+        for (int i = 0; i < blobControls.Length; i++) {
+            blobControls[i].StartSearch(startNodeIdx);
+        }
     }
 
     public Node[] NodeGroup {

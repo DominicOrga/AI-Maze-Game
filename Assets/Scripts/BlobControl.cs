@@ -22,8 +22,6 @@ public class BlobControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         nodeConnections = levelManager.NodeConnections;
-
-        StartCoroutine(Search(0));
 	}
 
 	// Update is called once per frame
@@ -33,7 +31,7 @@ public class BlobControl : MonoBehaviour {
             float deltaX = transform.position.x - destinationNode.x;
             float deltaY = transform.position.y - destinationNode.y;
 
-            if (Mathf.Abs(deltaX) < 0.5f && Mathf.Abs(deltaY) < 0.5f) {
+            if (Mathf.Abs(deltaX) < 0.1f && Mathf.Abs(deltaY) < 0.1f) {
                 isMove = false;
             }
             else {
