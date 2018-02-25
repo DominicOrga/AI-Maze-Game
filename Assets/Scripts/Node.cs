@@ -18,4 +18,10 @@ public class Node {
     public int y {
         get { return row * -2; }
     }
+
+    public Vector2 Position {
+        get {
+            return new Vector2(x, y);
+        }
+    }
 }
