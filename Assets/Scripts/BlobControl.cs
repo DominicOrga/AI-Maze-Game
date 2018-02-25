@@ -40,14 +40,14 @@ public class BlobControl : MonoBehaviour {
                 float step = speed * Time.deltaTime;
                 transform.position = Vector2.MoveTowards(transform.position, destinationNode.Position, step);
 
-                int rnd = Random.Range(10, 20);
+                int rnd = Random.Range(-20, 20);
                 Vector2 force = Vector2.zero;
                 if (currentNode.row == destinationNode.row) {
-                    force.y += deltaY > 0 ? -rnd : rnd;
+                    force.y += rnd;
                 } else {
-                    force.x += deltaX > 0 ? -rnd : rnd;
+                    force.x += rnd;
                 }
-                //rigidBody.AddForce(force);
+                rigidBody.AddForce(force);
             }
         }
 	}
