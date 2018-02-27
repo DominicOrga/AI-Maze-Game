@@ -10,6 +10,7 @@ public class LevelAnimator : MonoBehaviour {
     public GameObject uiThreePrefab;
     public GameObject uiBlobWinsPrefab;
     public GameObject uiBlipWinsPrefab;
+    public GameObject homeButton;
 
     Transform cameraTransform;
     LevelManager levelManager;
@@ -89,7 +90,8 @@ public class LevelAnimator : MonoBehaviour {
         cameraTransform.parent = null;
         yield return MoveCameraToBlock();
 
-        GameObject obj = Instantiate(isBlipWon ? uiBlipWinsPrefab : uiBlobWinsPrefab, new Vector3(cameraTransform.position.x, cameraTransform.position.y, 10), new Quaternion(0, 0, 0, 0));
+        Instantiate(isBlipWon ? uiBlipWinsPrefab : uiBlobWinsPrefab, new Vector3(cameraTransform.position.x, cameraTransform.position.y, 10), new Quaternion(0, 0, 0, 0));
+        homeButton.SetActive(true);
         yield break;
     }
 }

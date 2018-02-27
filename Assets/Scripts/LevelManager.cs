@@ -1,17 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
-
-    /** 
-     * TODO:
-     * -- Instantiate player on random start node
-     * -- Instantiate block on random goal node
-     * -- Make camera follow player
-     * -- Add public function that ends game.
-     * -- Add start countdown
-     **/
 
     public Camera camera;
     public RectTransform joystick;
@@ -81,5 +73,9 @@ public class LevelManager : MonoBehaviour {
     public void SetGameWon(bool isBlip) {
         levelAnimator.StartEndGame(isBlip);
         Destroy(joystick.gameObject); // Disable blip movement
+    }
+
+    public void GoHome() {
+        SceneManager.LoadScene(sceneName: "MenuScene");
     }
 }
