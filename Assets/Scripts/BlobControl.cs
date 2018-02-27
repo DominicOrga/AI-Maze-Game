@@ -22,6 +22,7 @@ public class BlobControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         nodeConnections = levelManager.NodeConnections;
+        //StartSearch(0); /** TODO: Remove */
 	}
 
 	// Update is called once per frame

@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour {
 
     public Camera camera;
     public RectTransform joystick;
+    public LevelAnimator levelAnimator;
     public GameObject blipPrefab;
     public GameObject blobPrefab;
 
@@ -48,9 +49,10 @@ public class LevelManager : MonoBehaviour {
             blobControls[i] = Instantiate(blobPrefab, startPosition, new Quaternion(0, 0, 0, 0)).GetComponent<BlobControl>();
         }
 
+        levelAnimator.PlayStartGame(startNodeIdx);
     }
 
-    void startGame(int startNodeIdx) {
+    public void startGame(int startNodeIdx) {
         joystick.GetComponentInParent<Canvas>().enabled = true;
 
         for (int i = 0; i < blobControls.Length; i++) {
@@ -73,28 +75,11 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    public void SetGamePaused(bool pause) {
-        isGamePaused = pause;
-
-        if (pause) {
-            Time.timeScale = 0;
-            joystick.GetComponentInParent<Canvas>().enabled = false;
-        } else {
-            Time.timeScale = 1;
-            joystick.GetComponentInParent<Canvas>().enabled = true;
-        }
-    }
-
-    public bool IsGamePaused() {
-        return isGamePaused;
-    }
-
     /**
      * Disable all player movements
      **/
     public void SetGameWon(bool isBlip) {
+        levelAnimator.StartEndGame(isBlip);
         Destroy(joystick.gameObject); // Disable blip movement
-        StopAllCoroutines();
-        Debug.Log("is Blip won?" + isBlip);
     }
 }
