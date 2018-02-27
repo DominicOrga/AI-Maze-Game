@@ -36,7 +36,7 @@ public class LevelManager : MonoBehaviour {
         camera.transform.parent = blipControl.transform;
         camera.transform.localPosition = new Vector3(0, 0, camera.transform.localPosition.z);
 
-        blobControls = new BlobControl[3];
+        blobControls = new BlobControl[Preferences.Difficulty];
         for (int i = 0; i < blobControls.Length; i++) {
             blobControls[i] = Instantiate(blobPrefab, startPosition, new Quaternion(0, 0, 0, 0)).GetComponent<BlobControl>();
         }
@@ -75,7 +75,7 @@ public class LevelManager : MonoBehaviour {
         Destroy(joystick.gameObject); // Disable blip movement
     }
 
-    public void GoHome() {
-        SceneManager.LoadScene(sceneName: "MenuScene");
+    public void LoadMainScene() {
+        SceneManager.LoadScene(sceneName: "MainScene");
     }
 }
