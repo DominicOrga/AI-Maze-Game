@@ -9,8 +9,6 @@ public class DifficultyControl : MonoBehaviour {
         SceneManager.LoadScene(sceneName: "MapScene");
     }
 
- 
-
 	public void SetDifficulty(int difficulty) {
         Preferences.Difficulty = difficulty;
     }
