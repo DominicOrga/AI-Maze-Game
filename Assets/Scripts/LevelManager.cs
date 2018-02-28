@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     public LevelAnimator levelAnimator;
     public GameObject blipPrefab;
     public GameObject blobPrefab;
+    public GameObject blockPrefab;
 
     NodeGroup nodeGroup;
     NodeConnections nodeConnection;
@@ -40,6 +41,10 @@ public class LevelManager : MonoBehaviour {
         for (int i = 0; i < blobControls.Length; i++) {
             blobControls[i] = Instantiate(blobPrefab, startPosition, new Quaternion(0, 0, 0, 0)).GetComponent<BlobControl>();
         }
+
+        Vector2 goalPosition = new Vector2(nodeGroup.nodes[goalNodeIdx].x, nodeGroup.nodes[goalNodeIdx].y);
+        GameObject block = Instantiate(blockPrefab, goalPosition, new Quaternion(0, 0, 0, 0));
+        block.transform.position = goalPosition;
 
         levelAnimator.PlayStartGame(startNodeIdx);
     }

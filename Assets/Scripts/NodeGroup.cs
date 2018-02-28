@@ -49,9 +49,14 @@ public class NodeGroup : MonoBehaviour {
     public int RandomizeGoalNodeIdx(int startNodeIdx = -1) {
         int[] goalNodes = this.goalNodes;
 
+        Debug.Log(goalNodes.Length);
+
         for (int i = 0; i < 25; i++) {
             int rnd = Random.Range(0, goalNodes.Length);
             int goalNodeIdx = goalNodes[rnd];
+
+            Debug.Log(rnd);
+            Debug.Log(goalNodeIdx);
 
             if (goalNodeIdx != startNodeIdx)
                 return goalNodeIdx;

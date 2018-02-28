@@ -15,14 +15,15 @@ public class LevelAnimator : MonoBehaviour {
     Transform cameraTransform;
     LevelManager levelManager;
     Transform blockTransform;
+    Transform blipTransform;
 
-    bool isMoveCamera;
+    bool isMoveCameraToBlock;
+    bool isMoveCameraToStartNode;
     float cameraSpeed = 25f;
 
     void Awake() {
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         levelManager = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
-        blockTransform = GameObject.FindGameObjectWithTag("Block").GetComponent<Transform>();
     }
 
     // Use this for initialization
@@ -33,7 +34,7 @@ public class LevelAnimator : MonoBehaviour {
     }
 
     void Update() {
-        if (isMoveCamera) {
+        if (isMoveCameraToBlock) {
             float step = cameraSpeed * Time.deltaTime;
             Vector3 newPosition = Vector3.MoveTowards(cameraTransform.position, blockTransform.position, step);
             newPosition.z = -10;
@@ -45,7 +46,23 @@ public class LevelAnimator : MonoBehaviour {
 
 
             if (deltaX < 1 && deltaY < 1) {
-                isMoveCamera = false;
+                isMoveCameraToBlock = false;
+            }
+        }
+
+        if (isMoveCameraToStartNode) {
+            float step = cameraSpeed * Time.deltaTime;
+            Vector3 newPosition = Vector3.MoveTowards(cameraTransform.position, blipTransform.position, step);
+            newPosition.z = -10;
+
+            cameraTransform.position = newPosition;
+
+            float deltaX = Mathf.Abs(cameraTransform.position.x - blipTransform.position.x);
+            float deltaY = Mathf.Abs(cameraTransform.position.y - blipTransform.position.y);
+
+
+            if (deltaX < 0.01 && deltaY < 0.01) {
+                isMoveCameraToStartNode = false;
             }
         }
     }
@@ -55,8 +72,16 @@ public class LevelAnimator : MonoBehaviour {
     }
 
     IEnumerator StartGame(int startNodeIdx) {
+        blipTransform = GameObject.FindGameObjectWithTag("Blip").GetComponent<Transform>();
+        blockTransform = GameObject.FindGameObjectWithTag("Block").GetComponent<Transform>();
 
-        yield return new WaitForSeconds(1f);
+        Vector3 pos = blockTransform.position;
+        pos.z = -10;
+        cameraTransform.position = pos;
+
+        yield return new WaitForSeconds(1.5f);
+
+        yield return MoveCameraToStartNode();
 
         GameObject obj = Instantiate(uiThreePrefab, new Vector3(cameraTransform.position.x, cameraTransform.position.y, 10), new Quaternion(0,0,0,0));
         yield return new WaitForSeconds(1f);
@@ -78,8 +103,13 @@ public class LevelAnimator : MonoBehaviour {
     }
 
     WaitUntil MoveCameraToBlock() {
-        isMoveCamera = true;
-        return new WaitUntil(() => !isMoveCamera);
+        isMoveCameraToBlock = true;
+        return new WaitUntil(() => !isMoveCameraToBlock);
+    }
+
+    WaitUntil MoveCameraToStartNode() {
+        isMoveCameraToStartNode = true;
+        return new WaitUntil(() => !isMoveCameraToStartNode);
     }
 
     public void StartEndGame(bool isBlipWon) {
