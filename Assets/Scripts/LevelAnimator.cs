@@ -11,6 +11,7 @@ public class LevelAnimator : MonoBehaviour {
     public GameObject uiBlobWinsPrefab;
     public GameObject uiBlipWinsPrefab;
     public GameObject homeButton;
+    public GameObject fog;
 
     Transform cameraTransform;
     LevelManager levelManager;
@@ -74,6 +75,7 @@ public class LevelAnimator : MonoBehaviour {
     IEnumerator StartGame(int startNodeIdx) {
         blipTransform = GameObject.FindGameObjectWithTag("Blip").GetComponent<Transform>();
         blockTransform = GameObject.FindGameObjectWithTag("Block").GetComponent<Transform>();
+        fog.SetActive(true);
 
         Vector3 pos = blockTransform.position;
         pos.z = -10;
@@ -118,6 +120,8 @@ public class LevelAnimator : MonoBehaviour {
 
 	IEnumerator EndGame(bool isBlipWon) {
         cameraTransform.parent = null;
+        fog.SetActive(false);
+
         yield return MoveCameraToBlock();
 
         Instantiate(isBlipWon ? uiBlipWinsPrefab : uiBlobWinsPrefab, new Vector3(cameraTransform.position.x, cameraTransform.position.y, 10), new Quaternion(0, 0, 0, 0));
