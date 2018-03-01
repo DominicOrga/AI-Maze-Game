@@ -8,6 +8,8 @@ public class LevelManager : MonoBehaviour {
     public Camera camera;
     public RectTransform joystick;
     public LevelAnimator levelAnimator;
+    public GameObject fog;
+    public GameObject fogControlButton;
     public GameObject blipPrefab;
     public GameObject blobPrefab;
     public GameObject blockPrefab;
@@ -17,6 +19,8 @@ public class LevelManager : MonoBehaviour {
 
     BlipControl blipControl;
     BlobControl[] blobControls;
+
+    bool isFogEnabled = true;
 
     bool isGamePaused;
 
@@ -46,6 +50,7 @@ public class LevelManager : MonoBehaviour {
         GameObject block = Instantiate(blockPrefab, goalPosition, new Quaternion(0, 0, 0, 0));
         block.transform.position = goalPosition;
 
+        fog.SetActive(true);
         levelAnimator.PlayStartGame(startNodeIdx);
     }
 
@@ -76,11 +81,19 @@ public class LevelManager : MonoBehaviour {
      * Disable all player movements
      **/
     public void SetGameWon(bool isBlip) {
+        fog.SetActive(false);
+        fogControlButton.SetActive(false);
+
         levelAnimator.StartEndGame(isBlip);
         Destroy(joystick.gameObject); // Disable blip movement
     }
 
     public void LoadMainScene() {
         SceneManager.LoadScene(sceneName: "MainScene");
+    }
+
+    public void triggerFog() {
+        fog.SetActive(!isFogEnabled);
+        isFogEnabled = !isFogEnabled;
     }
 }
