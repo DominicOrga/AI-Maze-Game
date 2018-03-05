@@ -22,15 +22,14 @@ public class BlobControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         nodeConnections = levelManager.NodeConnections;
-        //StartSearch(0); /** TODO: Remove */
 	}
 
 	// Update is called once per frame
 	void Update () {
 
         if (isMove) {
-            float deltaX = transform.position.x - destinationNode.x;
-            float deltaY = transform.position.y - destinationNode.y;
+            float deltaX = transform.position.x - destinationNode.X;
+            float deltaY = transform.position.y - destinationNode.Y;
 
             if (Mathf.Abs(deltaX) < 0.1f && Mathf.Abs(deltaY) < 0.1f) {
                 isMove = false;
@@ -66,7 +65,7 @@ public class BlobControl : MonoBehaviour {
     }
 
     WaitUntil MoveToNode(int nodeIdx) {
-        destinationNode = levelManager.NodeGroup[nodeIdx];
+        destinationNode = levelManager.Nodes[nodeIdx];
         isMove = true;
 
         return new WaitUntil(() => !isMove);
@@ -98,7 +97,7 @@ public class BlobControl : MonoBehaviour {
      * Backtrack search through recursive coroutine.
      **/
     IEnumerator Search(int nodeIdx) {
-        currentNode = levelManager.NodeGroup[nodeIdx];
+        currentNode = levelManager.Nodes[nodeIdx];
         ApplyForwardCheck(nodeIdx);
 
         int[] connectedNodes = GetAllConnectedNodes(nodeIdx);

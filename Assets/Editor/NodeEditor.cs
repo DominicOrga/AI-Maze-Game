@@ -39,6 +39,13 @@ public class NodeEditor : PropertyDrawer {
         Rect gRect = new Rect(position.x, position.y, 25, position.height);
         EditorGUI.PropertyField(gRect, property.FindPropertyRelative("isGoalNode"), GUIContent.none);
 
+        position.x += 30;
+        EditorGUI.LabelField(position, new GUIContent("Connections"));
+
+        position.x += 90;
+        Rect connectionsRect = new Rect(position.x, position.y, 100, position.height);
+        property.FindPropertyRelative("connections").stringValue = EditorGUI.TextField(connectionsRect, property.FindPropertyRelative("connections").stringValue);
+
         EditorGUI.EndProperty();
     }
 }

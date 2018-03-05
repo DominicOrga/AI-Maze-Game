@@ -36,7 +36,7 @@ public class LevelManager : MonoBehaviour {
         int startNodeIdx = nodeGroup.RandomizeStartNodeIdx();
         int goalNodeIdx = nodeGroup.RandomizeGoalNodeIdx(startNodeIdx);
 
-        Vector2 startPosition = new Vector2(nodeGroup.nodes[startNodeIdx].x, nodeGroup.nodes[startNodeIdx].y);
+        Vector2 startPosition = new Vector2(nodeGroup.nodes[startNodeIdx].X, nodeGroup.nodes[startNodeIdx].Y);
         blipControl = Instantiate(blipPrefab, startPosition, new Quaternion(0,0,0,0)).GetComponent<BlipControl>();
         camera.transform.parent = blipControl.transform;
         camera.transform.localPosition = new Vector3(0, 0, camera.transform.localPosition.z);
@@ -46,7 +46,7 @@ public class LevelManager : MonoBehaviour {
             blobControls[i] = Instantiate(blobPrefab, startPosition, new Quaternion(0, 0, 0, 0)).GetComponent<BlobControl>();
         }
 
-        Vector2 goalPosition = new Vector2(nodeGroup.nodes[goalNodeIdx].x, nodeGroup.nodes[goalNodeIdx].y);
+        Vector2 goalPosition = new Vector2(nodeGroup.nodes[goalNodeIdx].X, nodeGroup.nodes[goalNodeIdx].Y);
         GameObject block = Instantiate(blockPrefab, goalPosition, new Quaternion(0, 0, 0, 0));
         block.transform.position = goalPosition;
 
@@ -62,7 +62,7 @@ public class LevelManager : MonoBehaviour {
         }
     }
 
-    public Node[] NodeGroup {
+    public Node[] Nodes {
         get {
             return nodeGroup.nodes;
         }
@@ -73,7 +73,7 @@ public class LevelManager : MonoBehaviour {
      **/
     public bool[,] NodeConnections {
         get {
-            return nodeConnection.GetNodeConnections();
+            return nodeGroup.NodeConnections;
         }
     }
 
